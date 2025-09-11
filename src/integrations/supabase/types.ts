@@ -14,7 +14,302 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          event_date: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      incentives: {
+        Row: {
+          created_at: string
+          id: string
+          points: number
+          reason: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          points?: number
+          reason?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          points?: number
+          reason?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          message: string
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message: string
+          read?: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message?: string
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          location_address: string | null
+          location_lat: number | null
+          location_lng: number | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          location_address?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          location_address?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          assigned_by: string
+          completed_at: string | null
+          completion_image_url: string | null
+          created_at: string
+          deadline: string | null
+          description: string | null
+          id: string
+          location_lat: number | null
+          location_lng: number | null
+          report_id: string
+          status: string
+          title: string
+          updated_at: string
+          worker_id: string | null
+        }
+        Insert: {
+          assigned_by: string
+          completed_at?: string | null
+          completion_image_url?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          location_lat?: number | null
+          location_lng?: number | null
+          report_id: string
+          status?: string
+          title: string
+          updated_at?: string
+          worker_id?: string | null
+        }
+        Update: {
+          assigned_by?: string
+          completed_at?: string | null
+          completion_image_url?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          location_lat?: number | null
+          location_lng?: number | null
+          report_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          worker_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          id: string
+          user_id: string
+          video_id: string
+          video_title: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          user_id: string
+          video_id: string
+          video_title: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          user_id?: string
+          video_id?: string
+          video_title?: string
+        }
+        Relationships: []
+      }
+      vehicle_tracking: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_lat: number | null
+          current_lng: number | null
+          driver_id: string
+          end_lat: number | null
+          end_lng: number | null
+          id: string
+          start_lat: number | null
+          start_lng: number | null
+          started_at: string | null
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_lat?: number | null
+          current_lng?: number | null
+          driver_id: string
+          end_lat?: number | null
+          end_lng?: number | null
+          id?: string
+          start_lat?: number | null
+          start_lng?: number | null
+          started_at?: string | null
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_lat?: number | null
+          current_lng?: number | null
+          driver_id?: string
+          end_lat?: number | null
+          end_lng?: number | null
+          id?: string
+          start_lat?: number | null
+          start_lng?: number | null
+          started_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +318,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: "citizen" | "worker" | "committee" | "ulb"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +445,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["citizen", "worker", "committee", "ulb"],
+    },
   },
 } as const

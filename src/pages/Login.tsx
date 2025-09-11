@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,12 +6,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Leaf, Users, HardHat, Building2, Shield } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import heroImage from "@/assets/hero-bg.jpg";
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ id: '', password: '' });
+  const [credentials, setCredentials] = useState({ email: '', password: '', fullName: '' });
   const [activeTab, setActiveTab] = useState('citizen');
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { signIn, signUp, user, userRole } = useAuth();
 
   const userTypes = [
     {
@@ -48,12 +52,37 @@ const Login = () => {
     }
   ];
 
-  const handleLogin = () => {
-    const userType = userTypes.find(type => type.id === activeTab);
-    if (userType) {
-      // In a real app, this would validate credentials
-      navigate(userType.route);
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && userRole) {
+      const userType = userTypes.find(type => type.id === userRole);
+      if (userType) {
+        navigate(userType.route);
+      }
     }
+  }, [user, userRole, navigate]);
+
+  const handleAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!credentials.email || !credentials.password) return;
+    
+    setLoading(true);
+    
+    if (isSignUp) {
+      if (!credentials.fullName) {
+        setLoading(false);
+        return;
+      }
+      const { error } = await signUp(credentials.email, credentials.password, activeTab, credentials.fullName);
+      if (!error) {
+        setIsSignUp(false);
+        setCredentials({ email: '', password: '', fullName: '' });
+      }
+    } else {
+      const { error } = await signIn(credentials.email, credentials.password);
+    }
+    
+    setLoading(false);
   };
 
   const currentUser = userTypes.find(type => type.id === activeTab);
@@ -86,10 +115,12 @@ const Login = () => {
 
           <Card className="shadow-medium border-0">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl">Welcome Back</CardTitle>
-              <CardDescription>
-                Select your role and login to continue
-              </CardDescription>
+            <CardTitle className="text-2xl">
+              {isSignUp ? 'Create Account' : 'Welcome Back'}
+            </CardTitle>
+            <CardDescription>
+              {isSignUp ? 'Select your role and create account' : 'Select your role and login to continue'}
+            </CardDescription>
             </CardHeader>
             <CardContent>
               <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -110,20 +141,36 @@ const Login = () => {
                   <TabsContent key={type.id} value={type.id} className="space-y-4">
                     <div className="text-center p-4 bg-muted rounded-lg">
                       <type.icon className={`h-8 w-8 ${type.color} mx-auto mb-2`} />
-                      <h3 className="font-semibold">{type.title} Login</h3>
+                      <h3 className="font-semibold">
+                        {isSignUp ? `${type.title} Registration` : `${type.title} Login`}
+                      </h3>
                       <p className="text-sm text-muted-foreground">
                         {type.description}
                       </p>
                     </div>
 
-                    <div className="space-y-4">
+                    <form onSubmit={handleAuth} className="space-y-4">
+                      {isSignUp && (
+                        <div className="space-y-2">
+                          <Label htmlFor="fullName">Full Name</Label>
+                          <Input
+                            id="fullName"
+                            placeholder="Enter your full name"
+                            value={credentials.fullName}
+                            onChange={(e) => setCredentials(prev => ({ ...prev, fullName: e.target.value }))}
+                            required={isSignUp}
+                          />
+                        </div>
+                      )}
                       <div className="space-y-2">
-                        <Label htmlFor="id">User ID</Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input
-                          id="id"
-                          placeholder={`Enter your ${type.title.toLowerCase()} ID`}
-                          value={credentials.id}
-                          onChange={(e) => setCredentials(prev => ({ ...prev, id: e.target.value }))}
+                          id="email"
+                          type="email"
+                          placeholder={`Enter your ${type.title.toLowerCase()} email`}
+                          value={credentials.email}
+                          onChange={(e) => setCredentials(prev => ({ ...prev, email: e.target.value }))}
+                          required
                         />
                       </div>
                       <div className="space-y-2">
@@ -134,22 +181,33 @@ const Login = () => {
                           placeholder="Enter your password"
                           value={credentials.password}
                           onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+                          required
                         />
                       </div>
                       <Button 
-                        onClick={handleLogin}
+                        type="submit"
+                        disabled={loading}
                         className="w-full gradient-primary hover:opacity-90 transition-opacity"
                         size="lg"
                       >
-                        Login as {type.title}
+                        {loading ? 'Processing...' : `${isSignUp ? 'Create Account' : 'Login'} as ${type.title}`}
                       </Button>
-                    </div>
+                    </form>
                   </TabsContent>
                 ))}
               </Tabs>
 
-              <div className="mt-6 text-center text-sm text-muted-foreground">
-                <p>Demo credentials: ID: demo, Password: demo</p>
+              <div className="mt-6 text-center text-sm">
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp);
+                    setCredentials({ email: '', password: '', fullName: '' });
+                  }}
+                  className="text-primary hover:text-primary/80"
+                >
+                  {isSignUp ? "Already have an account? Login" : "Don't have an account? Sign Up"}
+                </Button>
               </div>
             </CardContent>
           </Card>
