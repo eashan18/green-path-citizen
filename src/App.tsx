@@ -10,6 +10,9 @@ import CitizenDashboard from "./pages/CitizenDashboard";
 import WorkerDashboard from "./pages/WorkerDashboard";
 import CommitteeDashboard from "./pages/CommitteeDashboard";
 import ULBDashboard from "./pages/ULBDashboard";
+import ReportWaste from "./pages/ReportWaste";
+import Training from "./pages/Training";
+import VoiceChat from "./pages/VoiceChat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +31,9 @@ const App = () => (
             <Route path="/worker-dashboard" element={<WorkerDashboard />} />
             <Route path="/committee-dashboard" element={<CommitteeDashboard />} />
             <Route path="/ulb-dashboard" element={<ULBDashboard />} />
+            <Route path="/report-waste" element={<ReportWaste />} />
+            <Route path="/training" element={<Training />} />
+            <Route path="/voice-chat" element={<VoiceChat />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

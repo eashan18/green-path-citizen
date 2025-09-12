@@ -95,7 +95,10 @@ const CitizenDashboard = () => {
               <p className="text-muted-foreground">
                 Spotted waste in your area? Report it quickly and earn points.
               </p>
-              <Button className="w-full gradient-primary hover:opacity-90">
+              <Button 
+                className="w-full gradient-primary hover:opacity-90"
+                onClick={() => window.location.href = '/report-waste'}
+              >
                 Report Waste Now
               </Button>
             </CardContent>
@@ -112,7 +115,11 @@ const CitizenDashboard = () => {
               <p className="text-muted-foreground">
                 Complete training modules to unlock more rewards and knowledge.
               </p>
-              <Button variant="outline" className="w-full">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => window.location.href = '/training'}
+              >
                 Continue Training
               </Button>
             </CardContent>

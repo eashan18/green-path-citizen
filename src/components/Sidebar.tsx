@@ -21,7 +21,14 @@ import {
   Navigation,
   ShoppingCart,
   Calendar,
-  Megaphone
+  Megaphone,
+  MessageSquare,
+  Home,
+  Users,
+  Building,
+  TrendingUp,
+  BarChart,
+  ClipboardList
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -32,30 +39,32 @@ interface SidebarProps {
 
 const navigationItems = {
   citizen: [
-    { icon: PlayCircle, label: 'Training', href: '/citizen/training' },
-    { icon: AlertTriangle, label: 'Report Waste', href: '/citizen/report' },
-    { icon: Award, label: 'Incentives', href: '/citizen/incentives' },
-    { icon: BookOpen, label: 'Knowledge Base', href: '/citizen/knowledge' },
+    { icon: Home, label: 'Dashboard', href: '/citizen-dashboard' },
+    { icon: AlertTriangle, label: 'Report Waste', href: '/report-waste' },
+    { icon: BookOpen, label: 'Training', href: '/training' },
+    { icon: MessageSquare, label: 'Voice Chat', href: '/voice-chat' },
+    { icon: Award, label: 'Rewards', href: '/rewards' },
   ],
   worker: [
-    { icon: PlayCircle, label: 'Training', href: '/worker/training' },
-    { icon: FileText, label: 'Assigned Tasks', href: '/worker/assigned' },
-    { icon: CheckSquare, label: 'Completed Tasks', href: '/worker/completed' },
-    { icon: Award, label: 'Incentives', href: '/worker/incentives' },
-    { icon: DollarSign, label: 'Penalties', href: '/worker/penalties' },
-    { icon: Truck, label: 'Vehicle Location', href: '/worker/vehicle' },
+    { icon: Home, label: 'Dashboard', href: '/worker-dashboard' },
+    { icon: ClipboardList, label: 'Tasks', href: '/tasks' },
+    { icon: MapPin, label: 'Routes', href: '/routes' },
+    { icon: Truck, label: 'Vehicle Status', href: '/vehicle' },
+    { icon: BookOpen, label: 'Training', href: '/training' },
   ],
   committee: [
-    { icon: Bell, label: 'Notifications', href: '/committee/notifications' },
-    { icon: FileText, label: 'Reports', href: '/committee/reports' },
-    { icon: ThumbsUp, label: 'Approval Tasks', href: '/committee/approval' },
-    { icon: Navigation, label: 'Vehicle Tracking', href: '/committee/tracking' },
-    { icon: ShoppingCart, label: 'Shopping', href: '/committee/shopping' },
-    { icon: Calendar, label: 'Events', href: '/committee/events' },
+    { icon: Home, label: 'Dashboard', href: '/committee-dashboard' },
+    { icon: Users, label: 'Manage Workers', href: '/manage-workers' },
+    { icon: FileText, label: 'Reports', href: '/reports' },
+    { icon: Calendar, label: 'Schedule', href: '/schedule' },
+    { icon: BarChart, label: 'Analytics', href: '/analytics' },
   ],
   ulb: [
-    { icon: Megaphone, label: 'Notices', href: '/ulb/notices' },
-    { icon: AlertTriangle, label: 'Report Waste', href: '/ulb/report' },
+    { icon: Home, label: 'Dashboard', href: '/ulb-dashboard' },
+    { icon: Building, label: 'Committees', href: '/committees' },
+    { icon: FileText, label: 'Policies', href: '/policies' },
+    { icon: TrendingUp, label: 'City Analytics', href: '/city-analytics' },
+    { icon: Bell, label: 'Notifications', href: '/notifications' },
   ],
 };
 
