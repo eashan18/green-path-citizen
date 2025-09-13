@@ -113,6 +113,14 @@ const CommitteeDashboard = () => {
       });
       if (error) throw error;
 
+      // Update report status to 'assigned'
+      const { error: reportError } = await supabase
+        .from('reports')
+        .update({ status: 'assigned' })
+        .eq('id', selectedReport.id);
+
+      if (reportError) console.error('Error updating report status:', reportError);
+
       toast({ title: 'Task Assigned', description: 'Worker has been assigned to this report.' });
       setAssignOpen(false);
       // Refresh pending reports list
