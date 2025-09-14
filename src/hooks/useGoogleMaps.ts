@@ -13,7 +13,7 @@ export function loadGoogleMaps() {
     const loader = new Loader({
       apiKey: GOOGLE_MAPS_API_KEY,
       version: 'weekly',
-      libraries: ['geometry', 'places', 'routes'] as any,
+      libraries: ['geometry', 'places'],
     });
     loaderPromise = loader.load();
   }
