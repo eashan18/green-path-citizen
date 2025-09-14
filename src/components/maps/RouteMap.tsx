@@ -12,13 +12,7 @@ interface RouteMapProps {
   onDirectionsReady?: (path: LatLng[]) => void;
 }
 
-const vehicleSvg = {
-  path: 'M20 10c0-1.1-.9-2-2-2h-3.3l-2-3.5C12.3 3.2 11.7 3 11 3H6C4.9 3 4 3.9 4 5v7c0 1.1.9 2 2 2 .7 0 1.3-.4 1.7-1h6.6c.4.6 1 .9 1.7.9 1.1 0 2-.9 2-2V10z',
-  fillColor: '#0ea5e9',
-  fillOpacity: 1,
-  scale: 1.2,
-  anchor: new google.maps.Point(12, 12),
-};
+// Vehicle icon will be created after Google Maps loads
 
 export const RouteMap: React.FC<RouteMapProps> = ({ start, end, current, height = 360, onDirectionsReady }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,10 +63,17 @@ export const RouteMap: React.FC<RouteMapProps> = ({ start, end, current, height 
 
             // Vehicle marker
             const initial = current ?? start;
+            const vehicleSvg: google.maps.Symbol = {
+              path: 'M20 10c0-1.1-.9-2-2-2h-3.3l-2-3.5C12.3 3.2 11.7 3 11 3H6C4.9 3 4 3.9 4 5v7c0 1.1.9 2 2 2 .7 0 1.3-.4 1.7-1h6.6c.4.6 1 .9 1.7.9 1.1 0 2-.9 2-2V10z',
+              fillColor: '#0ea5e9',
+              fillOpacity: 1,
+              scale: 1.2,
+              anchor: new google.maps.Point(12, 12),
+            };
             vehicleMarkerRef.current = new google.maps.Marker({
               position: initial,
-              map: mapRef.current,
-              icon: vehicleSvg as google.maps.Symbol,
+              map: mapRef.current!,
+              icon: vehicleSvg,
             });
 
             setReady(true);

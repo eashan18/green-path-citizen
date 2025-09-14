@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   ChevronLeft, 
   Leaf, 
@@ -70,8 +71,9 @@ const navigationItems = {
 
 export function Sidebar({ userType, collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
   const items = navigationItems[userType];
-  
   const userTypeLabels = {
     citizen: 'Citizen Portal',
     worker: 'Worker Dashboard',
@@ -135,10 +137,10 @@ export function Sidebar({ userType, collapsed, onToggle }: SidebarProps) {
 
       {/* Footer */}
       <div className="p-4 border-t border-border">
-        <Link 
-          to="/"
+        <button 
+          onClick={async () => { await signOut(); navigate('/login'); }}
           className={cn(
-            'flex items-center gap-3 p-3 rounded-lg text-sm transition-colors',
+            'flex items-center gap-3 p-3 rounded-lg text-sm transition-colors w-full text-left',
             'hover:bg-destructive/10 text-destructive',
             collapsed && 'justify-center'
           )}
@@ -146,7 +148,7 @@ export function Sidebar({ userType, collapsed, onToggle }: SidebarProps) {
         >
           <LogOut className="h-5 w-5 flex-shrink-0" />
           {!collapsed && <span>Logout</span>}
-        </Link>
+        </button>
       </div>
     </div>
   );
