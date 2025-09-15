@@ -14,6 +14,11 @@ import ReportWaste from "./pages/ReportWaste";
 import Training from "./pages/Training";
 import VoiceChat from "./pages/VoiceChat";
 import NotFound from "./pages/NotFound";
+import ManageWorkers from "./pages/ManageWorkers";
+import Tasks from "./pages/Tasks";
+import RoutesPage from "./pages/Routes";
+import Vehicle from "./pages/Vehicle";
+import Rewards from "./pages/Rewards";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +39,11 @@ const App = () => (
             <Route path="/report-waste" element={<ReportWaste />} />
             <Route path="/training" element={<Training />} />
             <Route path="/voice-chat" element={<VoiceChat />} />
+            <Route path="/manage-workers" element={<ManageWorkers />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/routes" element={<RoutesPage />} />
+            <Route path="/vehicle" element={<Vehicle />} />
+            <Route path="/rewards" element={<Rewards />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
